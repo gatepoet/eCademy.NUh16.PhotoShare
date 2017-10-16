@@ -29,5 +29,7 @@ namespace eCademy.NUh16.PhotoShare.Models
         {
             return new ApplicationDbContext();
         }
+
+        public IDbSet<Image> Images { get; set; }
     }
 }
