@@ -17,7 +17,10 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         // GET: Images
         public ActionResult Index()
         {
-            return View(db.Images.ToList());
+            var images = db.Images
+                .Include(image => image.File)
+                .ToList();
+            return View(images);
         }
 
         // GET: Images/Details/5
@@ -27,12 +30,29 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Image image = db.Images.Find(id);
-            if (image == null)
+            var item = db.Images
+                .Where(image => image.Id == id)
+                .Select(image => new
+                {
+                    Id = image.Id,
+                    Title = image.Title,
+                    Timestamp = image.Timestamp,
+                    ImageData = image.File.ImageData,
+                })
+                .Single();
+            var imageViewModel = new ImageViewModel
+            {
+                Id = item.Id,
+                Title = item.Title,
+                Timestamp = item.Timestamp,
+                Base64Image = "data:image/png;base64," + Convert.ToBase64String(item.ImageData)
+            };
+
+            if (imageViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(image);
+            return View(imageViewModel);
         }
 
         // GET: Images/Create
@@ -51,12 +71,18 @@ namespace eCademy.NUh16.PhotoShare.Controllers
                 viewModel.File.InputStream.CopyTo(memoryStream);
                 imageData = memoryStream.ToArray();
             }
+            var file = new UploadedFile
+            {
+                Id = Guid.NewGuid(),
+                Filename = viewModel.File.FileName,
+                ImageData = imageData,
+            };
 
             var image = new Image
             {
                 Timestamp = DateTime.Now,
                 Title = viewModel.Title,
-                ImageData = imageData,
+                File = file,
             };
             image.Timestamp = DateTime.Now;
             if (ModelState.IsValid)

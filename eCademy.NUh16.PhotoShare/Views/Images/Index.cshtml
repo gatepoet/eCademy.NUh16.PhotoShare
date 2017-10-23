@@ -15,10 +15,10 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
+            @Html.DisplayNameFor(model => model.File.Filename)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ImageData)
+            @Html.DisplayNameFor(model => model.Timestamp)
         </th>
         <th></th>
     </tr>
@@ -29,10 +29,10 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
+            @Html.DisplayFor(modelItem => item.File.Filename)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ImageData)
+            @Html.DisplayFor(modelItem => item.Timestamp)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
