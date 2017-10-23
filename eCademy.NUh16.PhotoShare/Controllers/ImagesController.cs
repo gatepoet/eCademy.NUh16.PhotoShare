@@ -4,13 +4,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using eCademy.NUh16.PhotoShare.Models;
+using System.IO;
 
 namespace eCademy.NUh16.PhotoShare.Controllers
 {
-    public class ImagesController : Controller
+    public partial class ImagesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -41,13 +41,23 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             return View();
         }
 
-        // POST: Images/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Timestamp,ImageData")] Image image)
+        public ActionResult Create(NewImage viewModel)
         {
+            byte[] imageData;
+            using (var memoryStream = new MemoryStream(viewModel.File.ContentLength))
+            {
+                viewModel.File.InputStream.CopyTo(memoryStream);
+                imageData = memoryStream.ToArray();
+            }
+
+            var image = new Image
+            {
+                Timestamp = DateTime.Now,
+                Title = viewModel.Title,
+                ImageData = imageData,
+            };
             image.Timestamp = DateTime.Now;
             if (ModelState.IsValid)
             {
