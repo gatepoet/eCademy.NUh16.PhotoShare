@@ -7,17 +7,45 @@ using System.Net;
 using System.Web.Mvc;
 using eCademy.NUh16.PhotoShare.Models;
 using System.IO;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace eCademy.NUh16.PhotoShare.Controllers
 {
     public partial class ImagesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _db;
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        public ApplicationDbContext Db
+        {
+            get
+            {
+                return _db ?? HttpContext.GetOwinContext().GetUserManager<ApplicationDbContext>();
+            }
+            private set
+            {
+                _db = value;
+            }
+        }
 
         // GET: Images
         public ActionResult Index()
         {
-            var images = db.Images
+            var images = Db.Images
                 .Include(image => image.File)
                 .ToList();
             return View(images);
@@ -30,7 +58,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var item = db.Images
+            var item = Db.Images
                 .Where(image => image.Id == id)
                 .Select(image => new
                 {
@@ -65,19 +93,15 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create(NewImage viewModel)
+        public async Task<ActionResult> Create(NewImage viewModel)
         {
-            byte[] imageData;
-            using (var memoryStream = new MemoryStream(viewModel.File.ContentLength))
-            {
-                viewModel.File.InputStream.CopyTo(memoryStream);
-                imageData = memoryStream.ToArray();
-            }
+            var owner = await UserManager.FindByNameAsync(User.Identity.Name);
+
             var file = new UploadedFile
             {
                 Id = Guid.NewGuid(),
                 Filename = viewModel.File.FileName,
-                ImageData = imageData,
+                ImageData = ReadFile(viewModel.File),
             };
 
             var image = new Image
@@ -85,16 +109,29 @@ namespace eCademy.NUh16.PhotoShare.Controllers
                 Timestamp = DateTime.Now,
                 Title = viewModel.Title,
                 File = file,
+                User = owner,
             };
-            image.Timestamp = DateTime.Now;
+
             if (ModelState.IsValid)
             {
-                db.Images.Add(image);
-                db.SaveChanges();
+                Db.Images.Add(image);
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(image);
+        }
+
+        private byte[] ReadFile(HttpPostedFileBase file)
+        {
+            byte[] imageData;
+            using (var memoryStream = new MemoryStream(file.ContentLength))
+            {
+                file.InputStream.CopyTo(memoryStream);
+                imageData = memoryStream.ToArray();
+            }
+
+            return imageData;
         }
 
         // GET: Images/Edit/5
@@ -105,7 +142,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Image image = db.Images.Find(id);
+            Image image = Db.Images.Find(id);
             if (image == null)
             {
                 return HttpNotFound();
@@ -123,8 +160,8 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(image).State = EntityState.Modified;
-                db.SaveChanges();
+                Db.Entry(image).State = EntityState.Modified;
+                Db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(image);
@@ -138,7 +175,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Image image = db.Images.Find(id);
+            Image image = Db.Images.Find(id);
             if (image == null)
             {
                 return HttpNotFound();
@@ -152,9 +189,9 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
-            Image image = db.Images.Find(id);
-            db.Images.Remove(image);
-            db.SaveChanges();
+            Image image = Db.Images.Find(id);
+            Db.Images.Remove(image);
+            Db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -162,7 +199,8 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UserManager.Dispose();
+                Db.Dispose();
             }
             base.Dispose(disposing);
         }
