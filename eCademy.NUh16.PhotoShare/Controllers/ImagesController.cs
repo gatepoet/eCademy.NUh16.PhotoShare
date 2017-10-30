@@ -56,6 +56,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         }
 
         // GET: Images/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +64,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(NewImage viewModel)
         {
             byte[] imageData;
@@ -96,6 +98,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         }
 
         // GET: Images/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -115,6 +118,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,Title,Timestamp,ImageData")] Image image)
         {
             if (ModelState.IsValid)
@@ -127,6 +131,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         }
 
         // GET: Images/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -144,6 +149,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         // POST: Images/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Image image = db.Images.Find(id);

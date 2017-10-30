@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201710231731281_UploadedFile.Designer.cs">
       <DependentUpon>201710231731281_UploadedFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710301828525_User_Image.cs" />
+    <Compile Include="Migrations\201710301828525_User_Image.Designer.cs">
+      <DependentUpon>201710301828525_User_Image.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\NewImage.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710231731281_UploadedFile.resx">
       <DependentUpon>201710231731281_UploadedFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710301828525_User_Image.resx">
+      <DependentUpon>201710301828525_User_Image.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
