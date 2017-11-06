@@ -10,6 +10,7 @@ using System.IO;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace eCademy.NUh16.PhotoShare.Controllers
 {
@@ -60,20 +61,26 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             }
             var item = Db.Images
                 .Where(image => image.Id == id)
-                .Select(image => new
-                {
-                    Id = image.Id,
-                    Title = image.Title,
-                    Timestamp = image.Timestamp,
-                    ImageData = image.File.ImageData,
-                })
+                //.Select(image => new
+                //{
+                //    Id = image.Id,
+                //    Title = image.Title,
+                //    Timestamp = image.Timestamp,
+                //    ImageData = image.File.ImageData,
+                //    Score = image.GetScore(),
+                //    Rating = image.GetRating(User.Identity.Name),
+                //    //Ratings = image.Ratings                    
+                //})
                 .Single();
             var imageViewModel = new ImageViewModel
             {
                 Id = item.Id,
                 Title = item.Title,
                 Timestamp = item.Timestamp,
-                Base64Image = "data:image/png;base64," + Convert.ToBase64String(item.ImageData)
+                Base64Image = "data:image/png;base64," + Convert.ToBase64String(item.File.ImageData),
+                Score = item.GetScore(),
+                Rating = item.GetRating(User.Identity.GetUserId()),
+                Username = item.User.UserName
             };
 
             if (imageViewModel == null)

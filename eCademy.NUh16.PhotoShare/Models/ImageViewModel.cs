@@ -13,5 +13,17 @@ namespace eCademy.NUh16.PhotoShare.Models
         [DataType(DataType.ImageUrl)]
         public string Base64Image { get; set; }
         public DateTime Timestamp { get; set; }
+        public int Rating { get; set; }
+        public double Score { get; set; }
+        public string Username { get; set; }
+    }
+
+    public class RateResult
+    {
+        public RateResult(double newScore)
+        {
+            NewScore = newScore;
+        }
+        public double NewScore { get; set; }
     }
 }

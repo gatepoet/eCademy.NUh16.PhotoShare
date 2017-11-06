@@ -179,6 +179,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\ImagesApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -189,6 +190,10 @@
     <Compile Include="Migrations\201710301828525_User_Image.cs" />
     <Compile Include="Migrations\201710301828525_User_Image.Designer.cs">
       <DependentUpon>201710301828525_User_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711061629156_Rating.cs" />
+    <Compile Include="Migrations\201711061629156_Rating.Designer.cs">
+      <DependentUpon>201711061629156_Rating.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\NewImage.cs" />
@@ -292,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710301828525_User_Image.resx">
       <DependentUpon>201710301828525_User_Image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711061629156_Rating.resx">
+      <DependentUpon>201711061629156_Rating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

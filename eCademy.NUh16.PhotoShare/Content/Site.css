@@ -22,3 +22,37 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Rating */
+span.rating {
+    line-height: 1.428571429; /* Same as Bootstrap's .btn class */
+}
+
+span.rating .star {
+    color: goldenrod;
+    padding: 2px;
+    font-size: 1.4em
+}
+
+span.rating .star:hover {
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: all 0.2s ease-out;
+}
+
+span.rating:hover .star:before {
+    color: gold;
+    content: "\e006";
+}
+
+span.rating .star:hover ~ .star:before {
+    content: "\e007";
+}
+
+span.rating .info {
+    display: none;
+}
+
+span.rating .star:hover ~ .info {
+    display: inline;
+}
