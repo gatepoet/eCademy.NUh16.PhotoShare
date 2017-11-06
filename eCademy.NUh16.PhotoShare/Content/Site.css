@@ -56,3 +56,84 @@ span.rating .info {
 span.rating .star:hover ~ .info {
     display: inline;
 }
+
+
+/* Custom styles */
+.list-photo {
+    text-align: center;
+}
+
+.list-photo .username {
+    display: block;
+}
+
+.list-photo img {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+
+.grid-image {
+    float: left;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.grid-image img {
+    position: absolute;
+    left: -100%;
+    right: -100%;
+    top: -100%;
+    bottom: -100%;
+    margin: auto;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.grid-image img:hover {
+    -webkit-transition: all 300ms ease-in-out;
+    -o-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+    -webkit-transform: rotate(5deg) scale(1.2);
+    -o-transform: rotate(5deg) scale(1.2);
+    transform: rotate(5deg) scale(1.2);
+}
+
+.grid-image a[data-title]:hover:before {
+    content: attr(data-title);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 10px;
+    vertical-align: super;
+    color: #ddd;
+    font-size: 1.5em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    -webkit-box-shadow: inset 0px 0px 139px 38px rgba(0,0,0,0.66);
+    -moz-box-shadow: inset 0px 0px 139px 38px rgba(0,0,0,0.66);
+    box-shadow: inset 0px 0px 139px 38px rgba(0,0,0,0.66);
+    pointer-events: none;
+    z-index: 20;
+}
+
+.image-container {
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+}
+
+.image-container div {
+    display: inline;
+}
+
+.user-photos img {
+    max-height: 150px;
+    margin-right: -4px;
+}
+
+#image img.img-responsive {
+    margin: 0 auto;
+}

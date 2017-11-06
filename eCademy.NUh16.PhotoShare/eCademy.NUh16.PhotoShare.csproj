@@ -216,6 +216,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\logo_128x128.png" />
+    <Content Include="Content\logo_24x24.png" />
+    <Content Include="Content\logo_256x256.png" />
+    <Content Include="Content\logo_32x32.png" />
+    <Content Include="Content\logo_48x48.png" />
+    <Content Include="Content\logo_512x512.png" />
+    <Content Include="Content\logo_64x64.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -231,6 +238,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.4.2.debug.js" />
+    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

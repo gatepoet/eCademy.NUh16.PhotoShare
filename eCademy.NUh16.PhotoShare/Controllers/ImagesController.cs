@@ -11,6 +11,7 @@ using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using System.Net.Mime;
 
 namespace eCademy.NUh16.PhotoShare.Controllers
 {
@@ -41,6 +42,16 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             {
                 _db = value;
             }
+        }
+
+        [Route("Images/Uploads/{id:int}")]
+        public FileResult Uploads(int id)
+        {
+            //var imageId = Path.GetFileNameWithoutExtension(filename);
+
+            var image = Db.Images.Find(id);
+
+            return File(image.File.ImageData, "image/jpeg");
         }
 
         // GET: Images
