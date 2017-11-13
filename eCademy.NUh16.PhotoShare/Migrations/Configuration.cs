@@ -1,5 +1,8 @@
 namespace eCademy.NUh16.PhotoShare.Migrations
 {
+    using eCademy.NUh16.PhotoShare.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -15,18 +18,21 @@ namespace eCademy.NUh16.PhotoShare.Migrations
 
         protected override void Seed(eCademy.NUh16.PhotoShare.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            CreateOrUpdateUser(context, "radioactive");
+            CreateOrUpdateUser(context, "lifeisbeautiful");
+        }
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+        private static void CreateOrUpdateUser(ApplicationDbContext context, string username)
+        {
+            if (!context.Users.Any(u => u.UserName == username))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                manager.Create(
+                    new ApplicationUser { UserName = username, Email = username + "@gmail.com" },
+                    "PhotoShare123."
+                );
+            }
         }
     }
 }
