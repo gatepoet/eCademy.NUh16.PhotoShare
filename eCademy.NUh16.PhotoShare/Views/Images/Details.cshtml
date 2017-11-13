@@ -2,14 +2,14 @@
 @{
     ViewBag.Title = "View";
     const int MaxRating = 5;
-    var username = Model.Username;
+    var username = "@" + Model.Username;
 }
 
 @Html.HiddenFor(model => model.Id)
 <h2>@Model.Title</h2>
 <div>
     <a href="#">
-        <h4 class="username">@username</h4>
+        <h4 class="username">@Html.ActionLink(username, "Index", "User", new { Username = Model.Username }, null)</h4>
     </a>
     <hr />
     <div class="container">
