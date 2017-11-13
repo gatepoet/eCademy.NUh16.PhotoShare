@@ -9,7 +9,10 @@
 <h2>@Model.Title</h2>
 <div>
     <a href="#">
-        <h4 class="username">@Html.ActionLink(username, "Index", "User", new { Username = Model.Username }, null)</h4>
+        <h4 class="username">
+            @Html.Gravatar(Model.Email, 32)
+            @Html.ActionLink(username, "Index", "User", new { Username = Model.Username }, null)
+        </h4>
     </a>
     <hr />
     <div class="container">

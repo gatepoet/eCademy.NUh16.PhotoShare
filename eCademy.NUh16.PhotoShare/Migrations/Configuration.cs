@@ -8,16 +8,24 @@ namespace eCademy.NUh16.PhotoShare.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<eCademy.NUh16.PhotoShare.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
+        private const string AdminRole = "admin";
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
             ContextKey = "eCademy.NUh16.PhotoShare.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(eCademy.NUh16.PhotoShare.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
+            if (!context.Roles.Any(r => r.Name == AdminRole)) {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                manager.Create(new IdentityRole { Name = AdminRole });
+            }
+
+
             CreateOrUpdateUser(context, "radioactive");
             CreateOrUpdateUser(context, "lifeisbeautiful");
         }
@@ -28,10 +36,12 @@ namespace eCademy.NUh16.PhotoShare.Migrations
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = username, Email = username + "@gmail.com" };
                 manager.Create(
-                    new ApplicationUser { UserName = username, Email = username + "@gmail.com" },
+                    user,
                     "PhotoShare123."
                 );
+                manager.AddToRole(user.Id, AdminRole);
             }
         }
     }

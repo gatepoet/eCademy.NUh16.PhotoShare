@@ -72,16 +72,6 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             }
             var item = Db.Images
                 .Where(image => image.Id == id)
-                //.Select(image => new
-                //{
-                //    Id = image.Id,
-                //    Title = image.Title,
-                //    Timestamp = image.Timestamp,
-                //    ImageData = image.File.ImageData,
-                //    Score = image.GetScore(),
-                //    Rating = image.GetRating(User.Identity.Name),
-                //    //Ratings = image.Ratings                    
-                //})
                 .Single();
             var imageViewModel = new ImageViewModel
             {
@@ -91,7 +81,8 @@ namespace eCademy.NUh16.PhotoShare.Controllers
                 Base64Image = "data:image/png;base64," + Convert.ToBase64String(item.File.ImageData),
                 Score = item.GetScore(),
                 Rating = item.GetRating(User.Identity.GetUserId()),
-                Username = item.User.UserName
+                Username = item.User.UserName,
+                Email = item.User.Email
             };
 
             if (imageViewModel == null)
