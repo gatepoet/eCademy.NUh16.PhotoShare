@@ -198,6 +198,10 @@
     <Compile Include="Migrations\201711061629156_Rating.Designer.cs">
       <DependentUpon>201711061629156_Rating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711202028564_UserRating.cs" />
+    <Compile Include="Migrations\201711202028564_UserRating.Designer.cs">
+      <DependentUpon>201711202028564_UserRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -325,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711061629156_Rating.resx">
       <DependentUpon>201711061629156_Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711202028564_UserRating.resx">
+      <DependentUpon>201711202028564_UserRating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

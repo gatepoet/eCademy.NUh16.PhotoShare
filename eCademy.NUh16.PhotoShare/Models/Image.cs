@@ -39,6 +39,6 @@ namespace eCademy.NUh16.PhotoShare.Models
         public Guid Id { get; set; }
         public virtual Image Image { get; set; }
         public virtual ApplicationUser User { get; set; }
-        int Rating { get; set; }
+        public int Rating { get; set; }
     }
 }
