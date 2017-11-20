@@ -92,55 +92,11 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             return View(imageViewModel);
         }
 
-        // GET: Images/Create
+        // GET: Images/Upload
         [Authorize]
-        public ActionResult Create()
+        public ActionResult Upload()
         {
             return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<ActionResult> Create(NewImage viewModel)
-        {
-            var owner = await UserManager.FindByNameAsync(User.Identity.Name);
-
-            var file = new UploadedFile
-            {
-                Id = Guid.NewGuid(),
-                Filename = viewModel.File.FileName,
-                ImageData = ReadFile(viewModel.File),
-            };
-
-            var image = new Image
-            {
-                Timestamp = DateTime.Now,
-                Title = viewModel.Title,
-                File = file,
-                User = owner,
-            };
-
-            if (ModelState.IsValid)
-            {
-                Db.Images.Add(image);
-                Db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(image);
-        }
-
-        private byte[] ReadFile(HttpPostedFileBase file)
-        {
-            byte[] imageData;
-            using (var memoryStream = new MemoryStream(file.ContentLength))
-            {
-                file.InputStream.CopyTo(memoryStream);
-                imageData = memoryStream.ToArray();
-            }
-
-            return imageData;
         }
 
         // GET: Images/Edit/5

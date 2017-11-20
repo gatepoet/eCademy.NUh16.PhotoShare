@@ -1,18 +1,18 @@
 ﻿@model eCademy.NUh16.PhotoShare.Models.NewImage
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Upload";
 }
 
-<h2>Create</h2>
+<h2>Upload</h2>
 
 
-@using (Html.BeginForm("Create", "Images", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Images", FormMethod.Post, new { enctype = "multipart/form-data", id= "uploadForm" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Image</h4>
+        <h4>Select a photo to share with the world!</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -39,10 +39,25 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        var uploadForm = $('#uploadForm');
+        uploadForm.on('submit', function (e) {
+            e.preventDefault();
+
+            var form = new FormData(uploadForm[0]);
+            $.post({
+                url: '/api/Images',
+                data: form,
+                contentType: false,
+                processData: false,
+            }).then(function (response) {
+                console.info(response);
+                window.location.href = '/Images/Details/' + response;
+            });
+
+            return false;
+        });
+    </script>
 }

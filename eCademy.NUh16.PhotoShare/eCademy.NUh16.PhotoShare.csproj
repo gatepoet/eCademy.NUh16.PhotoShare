@@ -199,7 +199,6 @@
       <DependentUpon>201711061629156_Rating.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageViewModel.cs" />
-    <Compile Include="Models\NewImage.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -302,9 +301,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Images\Create.cshtml" />
-    <Content Include="Views\Images\Index.cshtml" />
-    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\Upload.cshtml" />
     <Content Include="Views\Images\Details.cshtml" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />

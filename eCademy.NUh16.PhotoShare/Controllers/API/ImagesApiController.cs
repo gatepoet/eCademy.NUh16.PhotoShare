@@ -4,6 +4,8 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Web;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace eCademy.NUh16.PhotoShare.Controllers.API
 {
@@ -19,6 +21,19 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
             private set
             {
                 _db = value;
+            }
+        }
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
             }
         }
 
@@ -45,6 +60,50 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
             return Ok(images);
         }
 
+        [HttpPost]
+        [Route("api/Images")]
+        public async Task<IHttpActionResult> Post()
+        {
+            var owner = await UserManager.FindByNameAsync(User.Identity.Name);
+
+            var request = HttpContext.Current.Request;
+
+            var file = new UploadedFile
+            {
+                Id = Guid.NewGuid(),
+                Filename = request.Files[0].FileName,
+                ImageData = ReadFile(request.Files[0]),
+            };
+
+            var image = new Image
+            {
+                Timestamp = DateTime.Now,
+                Title = request.Form["title"],
+                File = file,
+                User = owner,
+            };
+
+            if (string.IsNullOrWhiteSpace (image.Title) || request.Files.Count == 0)
+            {
+                return BadRequest();
+            }
+
+            Db.Images.Add(image);
+            Db.SaveChanges();
+            return Ok(image.Id);
+        }
+
+        private byte[] ReadFile(HttpPostedFile file)
+        {
+            byte[] imageData;
+            using (var memoryStream = new MemoryStream(file.ContentLength))
+            {
+                file.InputStream.CopyTo(memoryStream);
+                imageData = memoryStream.ToArray();
+            }
+
+            return imageData;
+        }
         // PUT api/<controller>/5
         [HttpPut]
         [Route("Images/{id:int}/rate/{rating:int}")]
