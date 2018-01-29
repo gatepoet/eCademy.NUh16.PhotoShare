@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">PhotoShare</string>
+  <string name="ViewGlobalStream">View global stream</string>
+  <string name="UploadPhoto">Upload photo</string>
+  <string name="facebook_app_id">154019758545723</string>
+  <string name="fb_login_protocol_scheme">fb706020479548518</string>
 </resources>

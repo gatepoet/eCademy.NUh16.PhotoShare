@@ -3,6 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace eCademy.NUh16.PhotoShare.Models
 {
+    public class ExternalTokenBindingModel
+    {
+        [Required]
+        public string Provider { get; set; }
+
+        [Required]
+        public string Token { get; set; }
+    }
+    public class RegisterExternalTokenBindingModel : ExternalTokenBindingModel
+    {
+        [Required]
+        public string Username { get; set; }
+    }
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]

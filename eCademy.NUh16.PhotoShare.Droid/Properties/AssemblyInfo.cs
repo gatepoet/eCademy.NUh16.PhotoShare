@@ -28,3 +28,5 @@ using Android.App;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: MetaData("com.facebook.sdk.ApplicationId", Value = "@string/facebook_app_id")]
