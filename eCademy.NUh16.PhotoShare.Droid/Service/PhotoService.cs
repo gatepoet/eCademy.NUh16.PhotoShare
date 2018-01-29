@@ -20,7 +20,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
         private readonly string baseUrl;
 
-        private readonly string GetGlobalStreamPhotosUrl = "/api/photos/";
+        private readonly string GetGlobalStreamPhotosUrl = "/api/images/";
         private readonly string VerifyExternalTokenUrl = "/api/account/verifyExternalToken";
         public const string UploadPhotoUrl = "/api/photos/uploadMobile";
         private ExternalTokenResponse photoshareToken;
@@ -75,7 +75,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
                     return JsonConvert.DeserializeObject<Photo[]>(json);
                 }
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
                 Log.Error("PhotoShare", Java.Lang.Throwable.FromException(ex), "Could not get photos");
                 return new Photo[0];
@@ -97,7 +97,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
             };
         }
 
-        public async Task<Bitmap> GetImage(string url, int size)
+        public async Task<Bitmap> GetImage(string url, int size = 0)
         {
             try
             {

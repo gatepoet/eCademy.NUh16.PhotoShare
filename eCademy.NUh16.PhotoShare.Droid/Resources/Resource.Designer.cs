@@ -2021,8 +2021,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a007e
-			public const int action0 = 2131361918;
+			// aapt resource value: 0x7f0a007f
+			public const int action0 = 2131361919;
 			
 			// aapt resource value: 0x7f0a0056
 			public const int action_bar = 2131361878;
@@ -2045,17 +2045,17 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0033
 			public const int action_bar_title = 2131361843;
 			
-			// aapt resource value: 0x7f0a007b
-			public const int action_container = 2131361915;
+			// aapt resource value: 0x7f0a007c
+			public const int action_container = 2131361916;
 			
 			// aapt resource value: 0x7f0a0057
 			public const int action_context_bar = 2131361879;
 			
-			// aapt resource value: 0x7f0a0082
-			public const int action_divider = 2131361922;
+			// aapt resource value: 0x7f0a0083
+			public const int action_divider = 2131361923;
 			
-			// aapt resource value: 0x7f0a007c
-			public const int action_image = 2131361916;
+			// aapt resource value: 0x7f0a007d
+			public const int action_image = 2131361917;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int action_menu_divider = 2131361794;
@@ -2072,11 +2072,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0035
 			public const int action_mode_close_button = 2131361845;
 			
-			// aapt resource value: 0x7f0a007d
-			public const int action_text = 2131361917;
+			// aapt resource value: 0x7f0a007e
+			public const int action_text = 2131361918;
 			
-			// aapt resource value: 0x7f0a008b
-			public const int actions = 2131361931;
+			// aapt resource value: 0x7f0a008c
+			public const int actions = 2131361932;
 			
 			// aapt resource value: 0x7f0a0036
 			public const int activity_chooser_view_content = 2131361846;
@@ -2108,8 +2108,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a003d
 			public const int buttonPanel = 2131361853;
 			
-			// aapt resource value: 0x7f0a007f
-			public const int cancel_action = 2131361919;
+			// aapt resource value: 0x7f0a0080
+			public const int cancel_action = 2131361920;
 			
 			// aapt resource value: 0x7f0a006a
 			public const int cancel_button = 2131361898;
@@ -2120,8 +2120,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a004d
 			public const int checkbox = 2131361869;
 			
-			// aapt resource value: 0x7f0a0087
-			public const int chronometer = 2131361927;
+			// aapt resource value: 0x7f0a0088
+			public const int chronometer = 2131361928;
 			
 			// aapt resource value: 0x7f0a002f
 			public const int collapseActionView = 2131361839;
@@ -2186,14 +2186,17 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a002c
 			public const int end = 2131361836;
 			
-			// aapt resource value: 0x7f0a0091
-			public const int end_padder = 2131361937;
+			// aapt resource value: 0x7f0a0092
+			public const int end_padder = 2131361938;
 			
 			// aapt resource value: 0x7f0a0037
 			public const int expand_activities_button = 2131361847;
 			
 			// aapt resource value: 0x7f0a004c
 			public const int expanded_menu = 2131361868;
+			
+			// aapt resource value: 0x7f0a0073
+			public const int globalstream_photos = 2131361907;
 			
 			// aapt resource value: 0x7f0a0004
 			public const int home = 2131361796;
@@ -2204,8 +2207,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a003b
 			public const int icon = 2131361851;
 			
-			// aapt resource value: 0x7f0a008c
-			public const int icon_group = 2131361932;
+			// aapt resource value: 0x7f0a008d
+			public const int icon_group = 2131361933;
 			
 			// aapt resource value: 0x7f0a0030
 			public const int ifRoom = 2131361840;
@@ -2213,8 +2216,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0038
 			public const int image = 2131361848;
 			
-			// aapt resource value: 0x7f0a0088
-			public const int info = 2131361928;
+			// aapt resource value: 0x7f0a0089
+			public const int info = 2131361929;
 			
 			// aapt resource value: 0x7f0a0010
 			public const int inline = 2131361808;
@@ -2225,14 +2228,14 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0013
 			public const int left = 2131361811;
 			
-			// aapt resource value: 0x7f0a008d
-			public const int line1 = 2131361933;
+			// aapt resource value: 0x7f0a008e
+			public const int line1 = 2131361934;
 			
-			// aapt resource value: 0x7f0a008f
-			public const int line3 = 2131361935;
+			// aapt resource value: 0x7f0a0090
+			public const int line3 = 2131361936;
 			
-			// aapt resource value: 0x7f0a0073
-			public const int linearLayout1 = 2131361907;
+			// aapt resource value: 0x7f0a0074
+			public const int linearLayout1 = 2131361908;
 			
 			// aapt resource value: 0x7f0a001b
 			public const int listMode = 2131361819;
@@ -2240,29 +2243,29 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a003a
 			public const int list_item = 2131361850;
 			
-			// aapt resource value: 0x7f0a0079
-			public const int login_button = 2131361913;
-			
-			// aapt resource value: 0x7f0a0074
-			public const int logo_image = 2131361908;
+			// aapt resource value: 0x7f0a007a
+			public const int login_button = 2131361914;
 			
 			// aapt resource value: 0x7f0a0075
-			public const int logo_text_part1 = 2131361909;
+			public const int logo_image = 2131361909;
 			
 			// aapt resource value: 0x7f0a0076
-			public const int logo_text_part2 = 2131361910;
-			
-			// aapt resource value: 0x7f0a0078
-			public const int main_uploadPhoto_button = 2131361912;
+			public const int logo_text_part1 = 2131361910;
 			
 			// aapt resource value: 0x7f0a0077
-			public const int main_viewGlobalStream_button = 2131361911;
+			public const int logo_text_part2 = 2131361911;
 			
-			// aapt resource value: 0x7f0a0081
-			public const int media_actions = 2131361921;
+			// aapt resource value: 0x7f0a0079
+			public const int main_uploadPhoto_button = 2131361913;
 			
-			// aapt resource value: 0x7f0a007a
-			public const int messenger_send_button = 2131361914;
+			// aapt resource value: 0x7f0a0078
+			public const int main_viewGlobalStream_button = 2131361912;
+			
+			// aapt resource value: 0x7f0a0082
+			public const int media_actions = 2131361922;
+			
+			// aapt resource value: 0x7f0a007b
+			public const int messenger_send_button = 2131361915;
 			
 			// aapt resource value: 0x7f0a002d
 			public const int middle = 2131361837;
@@ -2282,14 +2285,14 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0019
 			public const int normal = 2131361817;
 			
-			// aapt resource value: 0x7f0a008a
-			public const int notification_background = 2131361930;
+			// aapt resource value: 0x7f0a008b
+			public const int notification_background = 2131361931;
+			
+			// aapt resource value: 0x7f0a0085
+			public const int notification_main_column = 2131361925;
 			
 			// aapt resource value: 0x7f0a0084
-			public const int notification_main_column = 2131361924;
-			
-			// aapt resource value: 0x7f0a0083
-			public const int notification_main_column_container = 2131361923;
+			public const int notification_main_column_container = 2131361924;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int open_graph = 2131361801;
@@ -2315,11 +2318,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0014
 			public const int right = 2131361812;
 			
-			// aapt resource value: 0x7f0a0089
-			public const int right_icon = 2131361929;
+			// aapt resource value: 0x7f0a008a
+			public const int right_icon = 2131361930;
 			
-			// aapt resource value: 0x7f0a0085
-			public const int right_side = 2131361925;
+			// aapt resource value: 0x7f0a0086
+			public const int right_side = 2131361926;
 			
 			// aapt resource value: 0x7f0a0026
 			public const int screen = 2131361830;
@@ -2399,8 +2402,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a000e
 			public const int standard = 2131361806;
 			
-			// aapt resource value: 0x7f0a0080
-			public const int status_bar_latest_event_content = 2131361920;
+			// aapt resource value: 0x7f0a0081
+			public const int status_bar_latest_event_content = 2131361921;
 			
 			// aapt resource value: 0x7f0a0050
 			public const int submenuarrow = 2131361872;
@@ -2411,11 +2414,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a001c
 			public const int tabMode = 2131361820;
 			
-			// aapt resource value: 0x7f0a0090
-			public const int text = 2131361936;
+			// aapt resource value: 0x7f0a0091
+			public const int text = 2131361937;
 			
-			// aapt resource value: 0x7f0a008e
-			public const int text2 = 2131361934;
+			// aapt resource value: 0x7f0a008f
+			public const int text2 = 2131361935;
 			
 			// aapt resource value: 0x7f0a0044
 			public const int textSpacerNoButtons = 2131361860;
@@ -2423,8 +2426,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f0a0043
 			public const int textSpacerNoTitle = 2131361859;
 			
-			// aapt resource value: 0x7f0a0086
-			public const int time = 2131361926;
+			// aapt resource value: 0x7f0a0087
+			public const int time = 2131361927;
 			
 			// aapt resource value: 0x7f0a003c
 			public const int title = 2131361852;
@@ -2597,82 +2600,88 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			public const int com_facebook_tooltip_bubble = 2130903072;
 			
 			// aapt resource value: 0x7f030021
-			public const int Main = 2130903073;
+			public const int GlobalStreamPhotos = 2130903073;
 			
 			// aapt resource value: 0x7f030022
-			public const int messenger_button_send_blue_large = 2130903074;
+			public const int Main = 2130903074;
 			
 			// aapt resource value: 0x7f030023
-			public const int messenger_button_send_blue_round = 2130903075;
+			public const int messenger_button_send_blue_large = 2130903075;
 			
 			// aapt resource value: 0x7f030024
-			public const int messenger_button_send_blue_small = 2130903076;
+			public const int messenger_button_send_blue_round = 2130903076;
 			
 			// aapt resource value: 0x7f030025
-			public const int messenger_button_send_white_large = 2130903077;
+			public const int messenger_button_send_blue_small = 2130903077;
 			
 			// aapt resource value: 0x7f030026
-			public const int messenger_button_send_white_round = 2130903078;
+			public const int messenger_button_send_white_large = 2130903078;
 			
 			// aapt resource value: 0x7f030027
-			public const int messenger_button_send_white_small = 2130903079;
+			public const int messenger_button_send_white_round = 2130903079;
 			
 			// aapt resource value: 0x7f030028
-			public const int notification_action = 2130903080;
+			public const int messenger_button_send_white_small = 2130903080;
 			
 			// aapt resource value: 0x7f030029
-			public const int notification_action_tombstone = 2130903081;
+			public const int notification_action = 2130903081;
 			
 			// aapt resource value: 0x7f03002a
-			public const int notification_media_action = 2130903082;
+			public const int notification_action_tombstone = 2130903082;
 			
 			// aapt resource value: 0x7f03002b
-			public const int notification_media_cancel_action = 2130903083;
+			public const int notification_media_action = 2130903083;
 			
 			// aapt resource value: 0x7f03002c
-			public const int notification_template_big_media = 2130903084;
+			public const int notification_media_cancel_action = 2130903084;
 			
 			// aapt resource value: 0x7f03002d
-			public const int notification_template_big_media_custom = 2130903085;
+			public const int notification_template_big_media = 2130903085;
 			
 			// aapt resource value: 0x7f03002e
-			public const int notification_template_big_media_narrow = 2130903086;
+			public const int notification_template_big_media_custom = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int notification_template_big_media_narrow_custom = 2130903087;
+			public const int notification_template_big_media_narrow = 2130903087;
 			
 			// aapt resource value: 0x7f030030
-			public const int notification_template_custom_big = 2130903088;
+			public const int notification_template_big_media_narrow_custom = 2130903088;
 			
 			// aapt resource value: 0x7f030031
-			public const int notification_template_icon_group = 2130903089;
+			public const int notification_template_custom_big = 2130903089;
 			
 			// aapt resource value: 0x7f030032
-			public const int notification_template_lines_media = 2130903090;
+			public const int notification_template_icon_group = 2130903090;
 			
 			// aapt resource value: 0x7f030033
-			public const int notification_template_media = 2130903091;
+			public const int notification_template_lines_media = 2130903091;
 			
 			// aapt resource value: 0x7f030034
-			public const int notification_template_media_custom = 2130903092;
+			public const int notification_template_media = 2130903092;
 			
 			// aapt resource value: 0x7f030035
-			public const int notification_template_part_chronometer = 2130903093;
+			public const int notification_template_media_custom = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int notification_template_part_time = 2130903094;
+			public const int notification_template_part_chronometer = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int select_dialog_item_material = 2130903095;
+			public const int notification_template_part_time = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int select_dialog_multichoice_material = 2130903096;
+			public const int PhotoDetails = 2130903096;
 			
 			// aapt resource value: 0x7f030039
-			public const int select_dialog_singlechoice_material = 2130903097;
+			public const int select_dialog_item_material = 2130903097;
 			
 			// aapt resource value: 0x7f03003a
-			public const int support_simple_spinner_dropdown_item = 2130903098;
+			public const int select_dialog_multichoice_material = 2130903098;
+			
+			// aapt resource value: 0x7f03003b
+			public const int select_dialog_singlechoice_material = 2130903099;
+			
+			// aapt resource value: 0x7f03003c
+			public const int support_simple_spinner_dropdown_item = 2130903100;
 			
 			static Layout()
 			{

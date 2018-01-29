@@ -25,6 +25,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
+            FindViewById<Button>(Resource.Id.main_viewGlobalStream_button).Click +=
+                (sender, args) => StartActivity(typeof(GlobalStreamActivity));
+
             callbackManager = CallbackManagerFactory.Create();
 
             var loginCallback = new FacebookCallback<LoginResult>
