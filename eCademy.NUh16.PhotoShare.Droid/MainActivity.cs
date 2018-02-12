@@ -7,6 +7,8 @@ using Android.Util;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Views;
+using Xamarin.Facebook.AppEvents;
+using Xamarin.Facebook.Login.Widget;
 
 namespace eCademy.NUh16.PhotoShare.Droid
 {
@@ -24,9 +26,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-
             FindViewById<Button>(Resource.Id.main_viewGlobalStream_button).Click +=
                 (sender, args) => StartActivity(typeof(GlobalStreamActivity));
+            FindViewById<LoginButton>(Resource.Id.login_button).SetReadPermissions("email");
 
             callbackManager = CallbackManagerFactory.Create();
 
@@ -53,7 +55,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
             if (photoService.GetLoginStatus() == PhotoService.LoginStatus.NeedsWebApiToken)
             {
-                await photoService.SignInWithFacebookToken(AccessToken.CurrentAccessToken.Token);
+                await SignInWithFacebookToken(AccessToken.CurrentAccessToken.Token);
             }
 
             UpdateButtons();
@@ -67,15 +69,15 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
         private void UpdateButtons()
         {
-            //var uploadPhotoButton = FindViewById<Button>(Resource.Id.main_uploadPhoto_button);
+            var uploadPhotoButton = FindViewById<Button>(Resource.Id.main_uploadPhoto_button);
             switch (photoService.GetLoginStatus())
             {
                 case PhotoService.LoginStatus.LoggedOut:
                 case PhotoService.LoginStatus.NeedsWebApiToken:
-                //    uploadPhotoButton.Visibility = ViewStates.Gone;
+                    uploadPhotoButton.Visibility = ViewStates.Gone;
                     break;
                 case PhotoService.LoginStatus.LoggedIn:
-                //    uploadPhotoButton.Visibility = ViewStates.Visible;
+                    uploadPhotoButton.Visibility = ViewStates.Visible;
                     break;
                 default:
                     break;
@@ -85,15 +87,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-
-            switch (requestCode)
-            {
-                case RequestCodes.FacebookLoginRequest:
-                    callbackManager.OnActivityResult(requestCode, (int)resultCode, data);
-                    break;
-                default:
-                    break;
-            }
+            callbackManager.OnActivityResult(requestCode, (int)resultCode, data);
         }
 
         private void SignInWithFacebookToken(LoginResult loginResult)
@@ -103,8 +97,25 @@ namespace eCademy.NUh16.PhotoShare.Droid
             Log.Debug(Application.PackageName, token);
             Task.Run(async () =>
             {
-                await photoService.SignInWithFacebookToken(token);
+                await SignInWithFacebookToken(token);
                 RunOnUiThread(() => UpdateButtons());
+            });
+        }
+
+        private async Task SignInWithFacebookToken(string token)
+        {
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    await photoService.SignInWithFacebookToken(token);
+                    RunOnUiThread(() => UpdateButtons());
+                }
+                catch (System.Exception ex)
+                {
+                    RunOnUiThread(() => Toast.MakeText(this, ex.Message, ToastLength.Long)
+                            .Show());
+                }
             });
         }
     }

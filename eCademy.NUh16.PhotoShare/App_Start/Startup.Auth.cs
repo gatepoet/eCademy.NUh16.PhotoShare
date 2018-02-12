@@ -3,15 +3,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using eCademy.NUh16.PhotoShare.Models;
 using System.Configuration;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.Owin.Security.OAuth;
-using System.Configuration;
-using Microsoft.Owin.Security.Facebook;
 
 namespace eCademy.NUh16.PhotoShare
 {

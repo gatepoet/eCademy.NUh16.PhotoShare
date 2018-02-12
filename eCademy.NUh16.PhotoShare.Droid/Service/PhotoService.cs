@@ -55,7 +55,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
         public PhotoService()
         {
 #if DEBUG
-            this.baseUrl = "http://192.168.1.8:51995/";
+            this.baseUrl = "http://192.168.1.7:51995/";
 #else
             this.baseUrl = "http://photoshare.one/";
 #endif

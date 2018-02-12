@@ -2864,14 +2864,14 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f050013
 			public const int com_facebook_smart_login_confirmation_cancel = 2131034131;
 			
+			// aapt resource value: 0x7f050017
+			public const int com_facebook_smart_login_confirmation_continue_as = 2131034135;
+			
 			// aapt resource value: 0x7f050014
-			public const int com_facebook_smart_login_confirmation_continue_as = 2131034132;
+			public const int com_facebook_smart_login_confirmation_title = 2131034132;
 			
 			// aapt resource value: 0x7f050015
-			public const int com_facebook_smart_login_confirmation_title = 2131034133;
-			
-			// aapt resource value: 0x7f050016
-			public const int com_facebook_tooltip_default = 2131034134;
+			public const int com_facebook_tooltip_default = 2131034133;
 			
 			// aapt resource value: 0x7f05003f
 			public const int facebook_app_id = 2131034175;
@@ -2879,8 +2879,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
 			// aapt resource value: 0x7f050040
 			public const int fb_login_protocol_scheme = 2131034176;
 			
-			// aapt resource value: 0x7f050017
-			public const int messenger_send_button_text = 2131034135;
+			// aapt resource value: 0x7f050016
+			public const int messenger_send_button_text = 2131034134;
 			
 			// aapt resource value: 0x7f05002c
 			public const int search_menu_title = 2131034156;
