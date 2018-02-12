@@ -3,55 +3,64 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <LinearLayout
-      android:orientation="horizontal"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:id="@+id/linearLayout1"
-      android:layout_margin="20dp">
-    <ImageView
-        android:src="@drawable/logo"
-        android:id="@+id/logo_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="0dp" />
-    <TextView
-        android:text="Photo"
-        android:id="@+id/logo_text_part1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:layout_margin="20dp">
+        <ImageView
+            android:src="@drawable/logo"
+            android:id="@+id/logo_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="0dp" />
+        <TextView
+            android:text="Photo"
+            android:id="@+id/logo_text_part1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="32dp"
+            android:layout_gravity="center"
+            android:textStyle="italic"
+            android:textColor="#FF333333" />
+        <TextView
+            android:text="Share"
+            android:id="@+id/logo_text_part2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="32dp"
+            android:layout_gravity="center"
+            android:textStyle="italic|bold"
+            android:textColor="#FF333333" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/main_viewGlobalStream_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ViewGlobalStream" />
+    <Button
+        android:id="@+id/main_uploadPhoto_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/UploadPhoto" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:textSize="32dp"
-        android:layout_gravity="center"
-        android:textStyle="italic"
-        android:textColor="#FF333333" />
-    <TextView
-        android:text="Share"
-        android:id="@+id/logo_text_part2"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:textSize="32dp"
-        android:layout_gravity="center"
-        android:textStyle="italic|bold"
-        android:textColor="#FF333333" />
-  </LinearLayout>
-  <Button
-      android:id="@+id/main_viewGlobalStream_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/ViewGlobalStream" />
-  <Button
-      android:id="@+id/main_uploadPhoto_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/UploadPhoto" />
-  <com.facebook.login.widget.LoginButton
-      android:id="@+id/login_button"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_horizontal"
-      android:layout_marginTop="30dp"
-      android:layout_marginBottom="30dp" />
+        android:id="@+id/linearLayout2"
+        android:gravity="bottom">
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="60dp" />
+    </LinearLayout>
 </LinearLayout>

@@ -7,12 +7,12 @@ using Android.Util;
 using System.Threading.Tasks;
 using Android.Content;
 using Android.Views;
-using Xamarin.Facebook.AppEvents;
 using Xamarin.Facebook.Login.Widget;
+using Android.Graphics;
 
 namespace eCademy.NUh16.PhotoShare.Droid
 {
-    [Activity(Label = "eCademy.NUh16.PhotoShare.Droid", MainLauncher = true, Icon = "@drawable/logo", Theme = "@android:style/Theme.Material.NoActionBar")]
+    [Activity(MainLauncher = true)]
     public class MainActivity : Activity
     {
         ICallbackManager callbackManager;
@@ -24,8 +24,12 @@ namespace eCademy.NUh16.PhotoShare.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            var font = Typeface.CreateFromAsset(Assets, "Fonts/IndieFlower.ttf");
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            FindViewById<TextView>(Resource.Id.logo_text_part1).Typeface = font;
+            FindViewById<TextView>(Resource.Id.logo_text_part2).Typeface = font;
+
             FindViewById<Button>(Resource.Id.main_viewGlobalStream_button).Click +=
                 (sender, args) => StartActivity(typeof(GlobalStreamActivity));
             FindViewById<LoginButton>(Resource.Id.login_button).SetReadPermissions("email");

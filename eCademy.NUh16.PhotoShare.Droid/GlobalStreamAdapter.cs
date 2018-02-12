@@ -45,11 +45,12 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 imageView = new ImageView(activity);
                 imageView.LayoutParameters = new GridView.LayoutParams(size, size);
                 imageView.SetScaleType(ImageView.ScaleType.CenterCrop);
-            } else {
+                imageView.Click += (sender, args) => OpenPhotoDetails(photo);
+            }
+            else {
                 imageView = (ImageView)convertView;
             }
 
-            imageView.Click += (sender, args) => OpenPhotoDetails(photo);
             Task.Run(async () => await LoadImage(imageView, photo.ImageUrl));
 
             return imageView;

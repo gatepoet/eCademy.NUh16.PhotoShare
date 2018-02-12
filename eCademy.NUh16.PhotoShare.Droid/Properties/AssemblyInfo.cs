@@ -30,3 +30,4 @@ using Android.App;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: MetaData("com.facebook.sdk.ApplicationId", Value = "@string/facebook_app_id")]
+[assembly: Application(Icon = "@drawable/logo", Theme = "@android:style/Theme.Material.Light.NoActionBar")]
