@@ -30,8 +30,10 @@ namespace eCademy.NUh16.PhotoShare.Droid
             FindViewById<TextView>(Resource.Id.logo_text_part1).Typeface = font;
             FindViewById<TextView>(Resource.Id.logo_text_part2).Typeface = font;
 
-            FindViewById<Button>(Resource.Id.main_viewGlobalStream_button).Click +=
-                (sender, args) => StartActivity(typeof(GlobalStreamActivity));
+            FindViewById<Button>(Resource.Id.main_viewGlobalStream_button).Click += (sender, args) =>
+                StartActivity(typeof(GlobalStreamActivity));
+            FindViewById<Button>(Resource.Id.main_uploadPhoto_button).Click += (sender, args) =>
+                StartActivity(typeof(UploadPhotoActivity));
             FindViewById<LoginButton>(Resource.Id.login_button).SetReadPermissions("email");
 
             callbackManager = CallbackManagerFactory.Create();

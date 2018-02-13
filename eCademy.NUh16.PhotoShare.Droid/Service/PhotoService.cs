@@ -161,5 +161,31 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 throw;
             }
         }
+
+        public async Task<int> UploadPhoto(string title, string filename, byte[] file, Action<UploadProgressChangedEventArgs> progressHandler = null)
+        {
+            EnsureLoggedIn();
+            try
+            {
+                using (var client = CreateWebClient())
+                {
+                    if (progressHandler != null)
+                    {
+                        client.UploadProgressChanged += (sender, args) => progressHandler(args);
+                    }
+                    client.Headers.Add(HttpRequestHeader.Authorization, AuthorizationHeader);
+                    client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+                    var request = new { Title = title, Filename = filename, File = file };
+                    var result = await client.UploadStringTaskAsync(UploadPhotoUrl, "POST", JsonConvert.SerializeObject(request));
+                    var newId = JsonConvert.DeserializeObject<int>(result);
+                    return newId;
+                }
+            }
+            catch (WebException ex)
+            {
+                Log.Error("PhotoShare", Java.Lang.Throwable.FromException(ex), "Could not upload photo");
+                return -1;
+            }
+        }
     }
 }

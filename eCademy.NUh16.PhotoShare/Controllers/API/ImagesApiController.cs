@@ -6,6 +6,8 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using System.IO;
+using System.Web.Http.Description;
+using System.ComponentModel.DataAnnotations;
 
 namespace eCademy.NUh16.PhotoShare.Controllers.API
 {
@@ -62,6 +64,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
 
         [HttpPost]
         [Route("api/Images")]
+        [ResponseType(typeof(int))]
         public async Task<IHttpActionResult> Post()
         {
             var owner = await UserManager.FindByNameAsync(User.Identity.Name);
@@ -90,9 +93,43 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
 
             Db.Images.Add(image);
             Db.SaveChanges();
+
             return Ok(image.Id);
         }
 
+        [HttpPost]
+        [Authorize]
+        [Route("api/photos/uploadMobile")]
+        [ResponseType(typeof(int))]
+        public async Task<IHttpActionResult> PostPhotoMobile(UploadPhotoRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var owner = await UserManager.FindByNameAsync(User.Identity.Name);
+
+            var file = new UploadedFile
+            {
+                Id = Guid.NewGuid(),
+                Filename = request.Filename,
+                ImageData = request.File,
+            };
+
+            var image = new Image
+            {
+                Timestamp = DateTime.Now,
+                Title = request.Title,
+                File = file,
+                User = owner,
+            };
+
+            Db.Images.Add(image);
+            Db.SaveChanges();
+
+            return Ok(image.Id);
+        }
         private byte[] ReadFile(HttpPostedFile file)
         {
             byte[] imageData;
@@ -113,6 +150,29 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
             var newScore = 1.1;
 
             return Ok(new RateResult(newScore));
+        }
+    }
+
+    public class UploadPhotoRequest
+    {
+        [Required]
+        public string Title
+        {
+            get;
+            set;
+        }
+        [Required]
+        public string Filename
+        {
+            get;
+            set;
+        }
+
+        [Required]
+        public byte[] File
+        {
+            get;
+            set;
         }
     }
 

@@ -371,7 +371,12 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
                     return null;
                 }
 
-                return new ExternalLoginData { LoginProvider = providerKeyClaim.Issuer, ProviderKey = providerKeyClaim.Value, UserName = identity.FindFirstValue(ClaimTypes.Name), Email = identity.FindFirstValue(ClaimTypes.Email) };
+                return new ExternalLoginData {
+                    LoginProvider = providerKeyClaim.Issuer,
+                    ProviderKey = providerKeyClaim.Value,
+                    UserName = identity.FindFirstValue(ClaimTypes.Name),
+                    Email = identity.FindFirstValue(ClaimTypes.Email)
+                };
             }
         }
 
