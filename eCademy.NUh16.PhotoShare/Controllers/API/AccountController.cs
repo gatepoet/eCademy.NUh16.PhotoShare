@@ -143,16 +143,7 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
             }
 
             //validate token
-            ExternalLoginData login;
-            try
-            {
-                login = await ExternalLoginData.FromToken(model.Provider, model.Token);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return InternalServerError(ex);
-            }
+            ExternalLoginData login = await ExternalLoginData.FromToken(model.Provider, model.Token);
             if (login == null)
             {
                 return InternalServerError();
@@ -335,33 +326,37 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
                     return null;
                 }
 
-                Uri uri = new Uri(verifyTokenEndPoint);
-                HttpResponseMessage response = await client.GetAsync(uri);
-                ClaimsIdentity identity = null;
-                if (response.IsSuccessStatusCode)
+                var iObj = await Get(verifyTokenEndPoint);
+                var identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+                if (provider == "Facebook")
                 {
-                    string content = await response.Content.ReadAsStringAsync();
-                    dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                    identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-                    if (provider == "Facebook")
+                    if (iObj["email"] == null)
                     {
-                        if (iObj["email"] == null)
-                        {
-                            return null;
-                        }
-
-                        identity.AddClaim(new Claim(ClaimTypes.Email, iObj["email"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
-                        uri = new Uri(verifyAppEndpoint);
-                        response = await client.GetAsync(uri);
-                        content = await response.Content.ReadAsStringAsync();
-                        dynamic appObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                        if (appObj["id"] != Startup.FacebookAuthOptions.AppId)
-                        {
-                            return null;
-                        }
-
-                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, iObj["id"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
+                        return null;
                     }
+
+                    identity.AddClaim(new Claim(ClaimTypes.Email, iObj["email"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
+                    var appObj = await Get(verifyAppEndpoint);
+                    if (appObj["id"] != Startup.FacebookAuthOptions.AppId)
+                    {
+                        return null;
+                    }
+
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, iObj["id"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
+                }
+
+                async Task<dynamic> Get(string url)
+                {
+                    var uri = new Uri(url);
+                    var response = await client.GetAsync(uri);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = await response.Content.ReadAsStringAsync();
+                        var obj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                        return obj;
+                    }
+
+                    return null;
                 }
 
                 if (identity == null)
