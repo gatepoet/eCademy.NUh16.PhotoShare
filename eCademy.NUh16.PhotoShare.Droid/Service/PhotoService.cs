@@ -4,6 +4,7 @@ using Java.Util;
 using Newtonsoft.Json;
 using System;
 using System.Net;
+using System.Net.Cache;
 using System.Threading.Tasks;
 using Xamarin.Facebook;
 
@@ -103,6 +104,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
             {
                 using (var client = CreateWebClient())
                 {
+                    client.CachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
                     if (size.HasValue)
                     {
                         client.QueryString.Add("thumb", size.Value.ToString());

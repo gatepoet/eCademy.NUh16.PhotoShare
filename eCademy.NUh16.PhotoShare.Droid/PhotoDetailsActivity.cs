@@ -29,8 +29,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
         private async Task LoadImage(string url)
         {
+            var size = Math.Max(Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
             var service = new PhotoService();
-            var image = await service.GetImage(url);
+            var image = await service.GetImage(url, size);
             var imageView = FindViewById<ImageView>(Resource.Id.image);
             RunOnUiThread(() => imageView.SetImageBitmap(image));
         }

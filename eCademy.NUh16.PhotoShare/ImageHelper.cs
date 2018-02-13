@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Drawing;
+using System;
 
 namespace eCademy.NUh16.PhotoShare
 {
@@ -27,6 +28,10 @@ namespace eCademy.NUh16.PhotoShare
             var image = Image.FromStream(new MemoryStream(bytes));
             int height;
             int width;
+            if (Math.Max(image.Width, image.Height) < size.Value)
+            {
+                return bytes;
+            }
             if (image.Width > image.Height)
             {
                 var ratio = (double)image.Height / (double)image.Width;
