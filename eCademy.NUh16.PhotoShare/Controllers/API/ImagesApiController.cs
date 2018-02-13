@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web.Http.Description;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http.Formatting;
 
 namespace eCademy.NUh16.PhotoShare.Controllers.API
 {
@@ -156,24 +157,11 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
     public class UploadPhotoRequest
     {
         [Required]
-        public string Title
-        {
-            get;
-            set;
-        }
+        public string Title { get; set; }
         [Required]
-        public string Filename
-        {
-            get;
-            set;
-        }
-
+        public string Filename { get; set; }
         [Required]
-        public byte[] File
-        {
-            get;
-            set;
-        }
+        public byte[] File { get; set; }
     }
 
     internal class ImageListItemDto

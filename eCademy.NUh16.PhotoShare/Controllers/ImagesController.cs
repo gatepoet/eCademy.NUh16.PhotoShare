@@ -12,6 +12,9 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net.Mime;
+using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
+using System.Configuration;
 
 namespace eCademy.NUh16.PhotoShare.Controllers
 {
@@ -45,13 +48,15 @@ namespace eCademy.NUh16.PhotoShare.Controllers
         }
 
         [Route("Images/Uploads/{id:int}")]
-        public FileResult Uploads(int id)
+        [OutputCache(VaryByParam = "*", CacheProfile = "ImageCache")]
+        public FileResult Uploads(int id, int? thumb = null)
         {
-            //var imageId = Path.GetFileNameWithoutExtension(filename);
-
-            var image = Db.Images.Find(id);
-
-            return File(image.File.ImageData, "image/jpeg");
+            var file = Db.Images.Find(id)?.File;
+            
+            return File(
+                ImageHelper.ResizeImage(file.ImageData, thumb),
+                ImageHelper.GetContentType(file.Filename),
+                file.Filename);
         }
 
         // GET: Images
