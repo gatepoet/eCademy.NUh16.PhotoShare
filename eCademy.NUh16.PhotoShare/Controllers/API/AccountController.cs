@@ -143,7 +143,16 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
             }
 
             //validate token
-            ExternalLoginData login = await ExternalLoginData.FromToken(model.Provider, model.Token);
+            ExternalLoginData login;
+            try
+            {
+                login = await ExternalLoginData.FromToken(model.Provider, model.Token);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return InternalServerError(ex);
+            }
             if (login == null)
             {
                 return InternalServerError();
@@ -327,65 +336,57 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
                 }
 
                 Uri uri = new Uri(verifyTokenEndPoint);
-                try
+                HttpResponseMessage response = await client.GetAsync(uri);
+                ClaimsIdentity identity = null;
+                if (response.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage response = await client.GetAsync(uri);
-                    ClaimsIdentity identity = null;
-                    if (response.IsSuccessStatusCode)
+                    string content = await response.Content.ReadAsStringAsync();
+                    dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                    identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
+                    if (provider == "Facebook")
                     {
-                        string content = await response.Content.ReadAsStringAsync();
-                        dynamic iObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                        identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-                        if (provider == "Facebook")
+                        if (iObj["email"] == null)
                         {
-                            if (iObj["email"] == null)
-                            {
-                                return null;
-                            }
-
-                            identity.AddClaim(new Claim(ClaimTypes.Email, iObj["email"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
-                            uri = new Uri(verifyAppEndpoint);
-                            response = await client.GetAsync(uri);
-                            content = await response.Content.ReadAsStringAsync();
-                            dynamic appObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                            if (appObj["id"] != Startup.FacebookAuthOptions.AppId)
-                            {
-                                return null;
-                            }
-
-                            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, iObj["id"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
+                            return null;
                         }
-                    }
 
-                    if (identity == null)
-                    {
-                        return null;
-                    }
+                        identity.AddClaim(new Claim(ClaimTypes.Email, iObj["email"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
+                        uri = new Uri(verifyAppEndpoint);
+                        response = await client.GetAsync(uri);
+                        content = await response.Content.ReadAsStringAsync();
+                        dynamic appObj = (Newtonsoft.Json.Linq.JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                        if (appObj["id"] != Startup.FacebookAuthOptions.AppId)
+                        {
+                            return null;
+                        }
 
-                    Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
-                    if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer) || String.IsNullOrEmpty(providerKeyClaim.Value))
-                    {
-                        return null;
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, iObj["id"].ToString(), ClaimValueTypes.String, "Facebook", "Facebook"));
                     }
-
-                    if (providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer)
-                    {
-                        return null;
-                    }
-
-                    return new ExternalLoginData
-                    {
-                        LoginProvider = providerKeyClaim.Issuer,
-                        ProviderKey = providerKeyClaim.Value,
-                        UserName = identity.FindFirstValue(ClaimTypes.Name),
-                        Email = identity.FindFirstValue(ClaimTypes.Email)
-                    };
                 }
-                catch (Exception ex)
+
+                if (identity == null)
                 {
-
-                    throw;
+                    return null;
                 }
+
+                Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
+                if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer) || String.IsNullOrEmpty(providerKeyClaim.Value))
+                {
+                    return null;
+                }
+
+                if (providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer)
+                {
+                    return null;
+                }
+
+                return new ExternalLoginData
+                {
+                    LoginProvider = providerKeyClaim.Issuer,
+                    ProviderKey = providerKeyClaim.Value,
+                    UserName = identity.FindFirstValue(ClaimTypes.Name),
+                    Email = identity.FindFirstValue(ClaimTypes.Email)
+                };
             }
         }
 
