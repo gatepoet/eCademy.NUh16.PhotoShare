@@ -52,7 +52,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
                 {
                     Id = image.Id,
                     Title = image.Title,
-                    ImageUrl = "/Images/Uploads/" + image.Id,
+                    ImageUrl = Url.Content($"~/Images/Uploads/{image.Id}"),
                     PhotoUrl = Url.Route("Default", new {
                         controller = "Images",
                         action = "Details",

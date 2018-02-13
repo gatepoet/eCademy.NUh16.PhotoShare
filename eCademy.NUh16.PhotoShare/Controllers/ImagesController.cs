@@ -83,7 +83,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
                 Id = item.Id,
                 Title = item.Title,
                 Timestamp = item.Timestamp,
-                Base64Image = "data:image/png;base64," + Convert.ToBase64String(item.File.ImageData),
+                ImageUrl = Url.Content($"~/Images/Uploads/{item.Id}"),
                 Score = item.GetScore(),
                 Rating = item.GetRating(User.Identity.GetUserId()),
                 Username = item.User.UserName,

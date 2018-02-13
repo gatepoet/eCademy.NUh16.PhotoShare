@@ -22,7 +22,7 @@
     <!-- ko foreach: photos -->
     <div class="grid-image">
         <a data-bind="attr: {href: photoUrl, 'data-title': title}">
-            <img data-bind="attr: {src: imageUrl, alt: title}" />
+            <img data-bind="attr: {src: thumbnailUrl, alt: title}" />
         </a>
     </div>
     <!-- /ko -->
@@ -31,22 +31,5 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/knockout")
-    <script>
-        $(function () {
-            var viewModel = {
-                photos: ko.observableArray([]),
-                loading: ko.observable(true)
-            };
-            ko.applyBindings(viewModel);
-
-            console.log('Getting photos')
-            $.get('/api/Images')
-                .done(function (data) {
-                    viewModel.photos.push.apply(viewModel.photos, data);
-                    viewModel.loading(false);
-                }).fail(function (err) {
-                    console.error(err);
-                })
-        });
-    </script>
+    @Scripts.Render("~/Scripts/local/home.js")
 }
