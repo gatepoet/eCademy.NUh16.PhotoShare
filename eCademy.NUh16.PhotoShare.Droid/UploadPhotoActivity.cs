@@ -131,8 +131,6 @@ namespace eCademy.NUh16.PhotoShare.Droid
             file = new Java.IO.File(dir, $"PhotoShare_{Guid.NewGuid()}.jpg");
             var uri = FileProvider.GetUriForFile(this, PackageName + ".provider", file);
             photoIntent.PutExtra(MediaStore.ExtraOutput, uri);
-            //photoIntent.AddFlags(ActivityFlags.GrantReadUriPermission);
-
 
             StartActivityForResult(photoIntent, RequestCodes.TakePhotoRequest);
         }

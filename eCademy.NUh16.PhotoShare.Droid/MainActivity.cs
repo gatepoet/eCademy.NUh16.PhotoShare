@@ -9,6 +9,7 @@ using Android.Content;
 using Android.Views;
 using Xamarin.Facebook.Login.Widget;
 using Android.Graphics;
+using Newtonsoft.Json;
 
 namespace eCademy.NUh16.PhotoShare.Droid
 {
@@ -18,7 +19,6 @@ namespace eCademy.NUh16.PhotoShare.Droid
         ICallbackManager callbackManager;
         FacebookTokenTracker tokenTracker;
         PhotoService photoService;
-        private LoginResult loginResult;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
@@ -40,7 +40,10 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
             var loginCallback = new FacebookCallback<LoginResult>
             {
-                HandleSuccess = SignInWithFacebookToken,
+                //HandleSuccess = SignInWithFacebookToken,
+                HandleSuccess = result => Log.Debug(
+                    Application.PackageName,
+                    JsonConvert.SerializeObject(result)),
                 HandleCancel = () => Log.Debug(
                     Application.PackageName,
                     "Canceled"),
@@ -98,7 +101,6 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
         private void SignInWithFacebookToken(LoginResult loginResult)
         {
-            this.loginResult = loginResult;
             var token = loginResult.AccessToken.Token;
             Log.Debug(Application.PackageName, token);
             Task.Run(async () =>
