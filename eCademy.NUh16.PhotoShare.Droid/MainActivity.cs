@@ -57,6 +57,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
             photoService = new PhotoService();
             tokenTracker = new FacebookTokenTracker(photoService)
             {
+                HandleLoggedIn = UpdateButtons,
                 HandleLoggedOut = UpdateButtons
             };
 

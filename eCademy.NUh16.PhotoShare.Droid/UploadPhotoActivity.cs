@@ -75,8 +75,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
         {
             var bitmap = BitmapLoader.LoadImage(
                 path,
-                Resources.DisplayMetrics.HeightPixels,
-                imageView.Height);
+                Resources.DisplayMetrics.WidthPixels,
+                Resources.DisplayMetrics.HeightPixels);
 
             if (bitmap != null)
             {

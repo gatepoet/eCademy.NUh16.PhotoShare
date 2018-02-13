@@ -97,13 +97,16 @@ namespace eCademy.NUh16.PhotoShare.Droid
             };
         }
 
-        public async Task<Bitmap> GetImage(string url, int size = 0)
+        public async Task<Bitmap> GetImage(string url, int? size = null)
         {
             try
             {
                 using (var client = CreateWebClient())
                 {
-                    client.QueryString.Add("thumb", size.ToString());
+                    if (size.HasValue)
+                    {
+                        client.QueryString.Add("thumb", size.Value.ToString());
+                    }
                     var imageBytes = await client.DownloadDataTaskAsync(url);
                     if (imageBytes == null || imageBytes.Length == 0)
                     {
