@@ -22,7 +22,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
         private readonly string baseUrl;
 
         private readonly string GetGlobalStreamPhotosUrl = "/api/images/";
-        private readonly string VerifyExternalTokenUrl = "/api/account/verifyExternalToken";
+        private readonly string VerifyExternalTokenUrl = "/api/Account/VerifyExternalToken";
         public const string UploadPhotoUrl = "/api/photos/uploadMobile";
         private ExternalTokenResponse photoshareToken;
         private AndroidSecureDataProvider secureDataProvider;
@@ -162,8 +162,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
             }
             catch (Exception ex)
             {
-                Log.Error("PhotoShare", Java.Lang.Throwable.FromException(ex), "Could not get photos");
-                throw;
+                Log.Error("PhotoShare", Java.Lang.Throwable.FromException(ex), "Error signing in");
             }
         }
 

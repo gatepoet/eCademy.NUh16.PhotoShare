@@ -28,7 +28,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
             var grid = FindViewById<GridView>(Resource.Id.globalstream_photos);
             grid.Adapter = adapter;
 
-            Task.Run(async () => await adapter.LoadPhotos());
+            Task.Run(async () =>
+            {
+                await adapter.LoadPhotos();
+                RunOnUiThread(() => FindViewById(Resource.Id.loadingPanel).Visibility = ViewStates.Gone);
+            });
         }
     }
 }

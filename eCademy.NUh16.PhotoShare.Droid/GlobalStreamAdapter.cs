@@ -39,7 +39,6 @@ namespace eCademy.NUh16.PhotoShare.Droid
             var photo = this[position];
 
             ImageView imageView;
-
             if (convertView == null)
             {
                 imageView = new ImageView(activity);
@@ -48,7 +47,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 imageView.Click += (sender, args) => OpenPhotoDetails(photo);
             }
             else {
-                imageView = (ImageView)convertView;
+                imageView = (ImageView) convertView;
             }
 
             Task.Run(async () => await LoadImage(imageView, photo.ImageUrl));

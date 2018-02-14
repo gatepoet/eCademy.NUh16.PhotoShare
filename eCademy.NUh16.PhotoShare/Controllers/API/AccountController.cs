@@ -21,116 +21,17 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
     [RoutePrefix("api/Account")]
     public class OAuthController : ApiController
     {
-        private const string LocalLoginProvider = "Local";
-        private ApplicationUserManager _userManager;
-        public OAuthController()
+        public OAuthController() : this(HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>())
         {
         }
 
-        public OAuthController(ApplicationUserManager userManager, ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+        public OAuthController(ApplicationUserManager userManager)
         {
             UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
         }
 
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
-        public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat
-        {
-            get;
-            private set;
-        }
-        [Route("Test")]
-        public IHttpActionResult GetTest()
-        {
-            return Ok(User.Identity.Name);
-        }
-        [OverrideAuthentication]
-        [AllowAnonymous]
-        [Route("RegisterExternalToken")]
-        public async Task<IHttpActionResult> GetUserRegistration(ExternalTokenBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            //validate token
-            ExternalLoginData login = await ExternalLoginData.FromToken(model.Provider, model.Token);
-            if (login == null)
-            {
-                return InternalServerError();
-            }
-
-            var user = await UserManager.FindByEmailAsync(login.Email);
-            bool hasRegistered = user != null;
-            return Ok(hasRegistered);
-        }
-
-        // POST api/Account/RegisterExternalToken
-        [OverrideAuthentication]
-        [AllowAnonymous]
-        [Route("RegisterExternalToken")]
-        public async Task<IHttpActionResult> PostRegisterExternalToken(RegisterExternalTokenBindingModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            //validate token
-            ExternalLoginData login = await ExternalLoginData.FromToken(model.Provider, model.Token);
-            if (login == null)
-            {
-                return InternalServerError();
-            }
-
-            if (login.LoginProvider != model.Provider)
-            {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                return InternalServerError();
-            }
-
-            //if we reached this point then token is valid
-            ApplicationUser user = await UserManager.FindByEmailAsync(login.Email);
-            bool hasRegistered = user != null;
-            IdentityResult result;
-            if (hasRegistered)
-            {
-                return GetErrorResult(IdentityResult.Failed("User aldready registered."));
-            }
-
-            user = new ApplicationUser()
-            { UserName = login.Email, Email = login.Email };
-            result = await UserManager.CreateAsync(user);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            var loginInfo = new UserLoginInfo(login.LoginProvider, login.ProviderKey);
-            result = await UserManager.AddLoginAsync(user.Id, loginInfo);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            //authenticate
-            JObject token = await Authenticate(login, user);
-            return Ok(token);
-        }
-
+        public ApplicationUserManager UserManager { get; }
+       
         // POST api/Account/RegisterExternalToken
         [OverrideAuthentication]
         [AllowAnonymous]
@@ -206,10 +107,9 @@ namespace eCademy.NUh15.PhotoShare.Controllers.API
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _userManager != null)
+            if (disposing && UserManager != null)
             {
-                _userManager.Dispose();
-                _userManager = null;
+                UserManager.Dispose();
             }
 
             base.Dispose(disposing);

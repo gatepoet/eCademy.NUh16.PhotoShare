@@ -33,7 +33,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
             var service = new PhotoService();
             var image = await service.GetImage(url, size);
             var imageView = FindViewById<ImageView>(Resource.Id.image);
-            RunOnUiThread(() => imageView.SetImageBitmap(image));
+            RunOnUiThread(() =>
+            {
+                imageView.SetImageBitmap(image);
+                FindViewById(Resource.Id.loadingPanel).Visibility = ViewStates.Gone;
+            });
         }
     }
 }

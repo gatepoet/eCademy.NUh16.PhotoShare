@@ -11,6 +11,8 @@ using Android;
 using Android.Content.PM;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
+using static Android.Graphics.Bitmap;
+using System.Threading.Tasks;
 
 namespace eCademy.NUh16.PhotoShare.Droid
 {
@@ -106,23 +108,29 @@ namespace eCademy.NUh16.PhotoShare.Droid
             var title = FindViewById<EditText>(Resource.Id.uploadPhoto_comment).Text;
             var filename = file.Name;
 
-            var s = new MemoryStream();
-            var stream = new BufferedStream(s);
-            BitmapLoader.LoadImage(file.AbsolutePath).Compress(
-                    Android.Graphics.Bitmap.CompressFormat.Jpeg,
-                    100,
-                    stream);
-
-            var id = await new PhotoService().UploadPhoto(
-                title,
-                filename,
-                s.ToArray(),
-                args => RunOnUiThread(() => progress.Progress = args.ProgressPercentage));
-
-            if (id > 0)
+            await Task.Run(async () =>
             {
-                Finish();
-            }
+                var s = new MemoryStream();
+                var stream = new BufferedStream(s);
+                BitmapLoader
+                    .LoadImage(file.AbsolutePath)
+                    .Compress(CompressFormat.Jpeg, 92, stream);
+                
+                var id = await new PhotoService().UploadPhoto(
+                    title,
+                    filename,
+                    s.ToArray(),
+                    args => RunOnUiThread(() => progress.Progress = args.ProgressPercentage));
+
+                RunOnUiThread(() =>
+                {
+                    progress.Dismiss();
+                    if (id > 0)
+                    {
+                        Finish();
+                    }
+                });
+            });
         }
 
         private void TakeAPhoto(object sender, EventArgs e)
