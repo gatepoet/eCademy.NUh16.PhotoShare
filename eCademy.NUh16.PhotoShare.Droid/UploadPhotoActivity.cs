@@ -13,6 +13,12 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using static Android.Graphics.Bitmap;
 using System.Threading.Tasks;
+using Android.Util;
+using System.Linq;
+using Android.Gms.Location;
+using Android.Locations;
+using eCademy.NUh16.PhotoShare.Droid.Utils;
+using Android.Media;
 
 namespace eCademy.NUh16.PhotoShare.Droid
 {
@@ -25,8 +31,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
         private ImageView imageView;
         private static Java.IO.File dir;
         private static Java.IO.File file;
+        private Button setLocationButton;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected async override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
@@ -36,6 +43,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
             imageView = FindViewById<ImageView>(Resource.Id.uploadPhoto_image);
             imageView.Click += TakeAPhoto;
             uploadButton.Click += UploadPhoto;
+
+            setLocationButton = FindViewById<Button>(Resource.Id.setLocation);
+            setLocationButton.Click += async delegate { await SetLocation(); };
 
             if (IsThereAnAppToTakePictures())
             {
@@ -55,6 +65,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 case RequestCodes.TakePhotoRequest:
                     MakeAvailableInGallery(file);
                     ShowImage(file.AbsolutePath);
+
+                    setLocationButton.Visibility = Android.Views.ViewStates.Visible;
                     break;
                 default:
                     break;
@@ -75,6 +87,9 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
         private void ShowImage(string path)
         {
+            var location = new ExifInterface(path).ReadLocation();
+            FindViewById<TextView>(Resource.Id.imageLocation).Text = location.ToFormattedString(this);
+
             var bitmap = BitmapLoader.LoadImage(
                 path,
                 Resources.DisplayMetrics.WidthPixels,
@@ -110,16 +125,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
             await Task.Run(async () =>
             {
-                var s = new MemoryStream();
-                var stream = new BufferedStream(s);
-                BitmapLoader
-                    .LoadImage(file.AbsolutePath)
-                    .Compress(CompressFormat.Jpeg, 92, stream);
-                
+                Compress(file.AbsolutePath);
                 var id = await new PhotoService().UploadPhoto(
                     title,
                     filename,
-                    s.ToArray(),
+                    File.ReadAllBytes(file.AbsolutePath),
                     args => RunOnUiThread(() => progress.Progress = args.ProgressPercentage));
 
                 RunOnUiThread(() =>
@@ -132,6 +142,65 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 });
             });
         }
+
+        private void Compress(string path)
+        {
+            var stream = new MemoryStream();
+            var location = new ExifInterface(path).ReadLocation();
+            BitmapLoader
+                .LoadImage(file.AbsolutePath)
+                .Compress(CompressFormat.Jpeg, 92, stream);
+            File.WriteAllBytes(path, stream.ToArray());
+            new ExifInterface(path).WriteLocation(location);
+        }
+        #region Get location
+
+        private async Task SetLocation()
+        {
+            if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) == Permission.Granted)
+            {
+                var locationClient = LocationServices.GetFusedLocationProviderClient(this);
+                var deviceLocation = await locationClient.GetLastLocationAsync();
+                if (deviceLocation != null)
+                {
+                    var exif = new ExifInterface(file.AbsolutePath);
+                    exif.WriteLocation(deviceLocation);
+                }
+                else
+                {
+                    ShowError("Could not get location");
+                }
+
+                FindViewById<TextView>(Resource.Id.imageLocation).Text = deviceLocation.ToFormattedString(this);
+            }
+            else
+            {
+                RequestPermissions(new[] { Manifest.Permission.AccessFineLocation }, RequestCodes.GetLocationRequest);
+            }
+        }
+
+        public async override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            switch (requestCode)
+            {
+                case RequestCodes.GetLocationRequest:
+                    if (grantResults.All(result => result == Permission.Granted))
+                    {
+                        await SetLocation();
+                    }
+                    else
+                    {
+                        ShowError("Get GPS location permission not granted");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
 
         private void TakeAPhoto(object sender, EventArgs e)
         {
@@ -162,6 +231,15 @@ namespace eCademy.NUh16.PhotoShare.Droid
             {
                 dir.Mkdirs();
             }
+        }
+
+        private void ShowError(string message)
+        {
+            Log.Error(PackageName, message);
+            new AlertDialog.Builder(this)
+                .SetMessage(message)
+                .SetNeutralButton("Ok", delegate { })
+                .Show();
         }
     }
 }

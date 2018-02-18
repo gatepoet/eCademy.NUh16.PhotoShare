@@ -13,6 +13,44 @@
             android:layout_margin="5dp"
             android:singleLine="true"
             android:hint="Comment" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:gravity="right"
+            android:layout_margin="10dp">
+            <TextView
+                android:text="@string/image_location"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textView1"
+                android:gravity="center_vertical" />
+            <TextView
+                android:text="@string/no_location"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/imageLocation"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayout2"
+                android:gravity="right">
+                <Button
+                    android:text="@string/set_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/setLocation"
+                    android:visibility="invisible" />
+            </LinearLayout>
+        </LinearLayout>
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:layout_width="match_parent"

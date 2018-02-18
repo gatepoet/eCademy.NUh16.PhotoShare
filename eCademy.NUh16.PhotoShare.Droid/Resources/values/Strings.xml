@@ -6,4 +6,7 @@
   <string name="uploadPhoto_progressDialog_text">Uploading photo</string>
   <string name="facebook_app_id">154019758545723</string>
   <string name="fb_login_protocol_scheme">fb706020479548518</string>
+  <string name="no_location">Not set</string>
+  <string name="set_location">Set location</string>
+  <string name="image_location">Location:</string>
 </resources>
