@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201711202028564_UserRating.Designer.cs">
       <DependentUpon>201711202028564_UserRating.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802180524591_CascaseDelete.cs" />
+    <Compile Include="Migrations\201802180524591_CascaseDelete.Designer.cs">
+      <DependentUpon>201802180524591_CascaseDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -371,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711202028564_UserRating.resx">
       <DependentUpon>201711202028564_UserRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802180524591_CascaseDelete.resx">
+      <DependentUpon>201802180524591_CascaseDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

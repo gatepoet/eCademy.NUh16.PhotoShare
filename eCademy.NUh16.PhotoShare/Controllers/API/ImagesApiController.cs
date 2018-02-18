@@ -9,6 +9,8 @@ using System.IO;
 using System.Web.Http.Description;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Formatting;
+using Microsoft.AspNet.Identity;
+using System.Net;
 
 namespace eCademy.NUh16.PhotoShare.Controllers.API
 {
@@ -61,6 +63,26 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
                 });
 
             return Ok(images);
+        }
+
+        [HttpDelete]
+        [Route("api/Images/{id:int}")]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            Image image = Db.Images.Find(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (image.User != currentUser) {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            Db.Images.Remove(image);
+            Db.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost]

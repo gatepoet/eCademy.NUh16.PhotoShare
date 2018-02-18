@@ -17,6 +17,7 @@ namespace eCademy.NUh16.PhotoShare.Models
         public double Score { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public bool IsOwner { get; set; }
     }
 
     public class RateResult

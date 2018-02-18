@@ -30,7 +30,6 @@ namespace eCademy.NUh16.PhotoShare.Models
             {
                 Ratings.Add(new UserRating {
                     Id = Guid.NewGuid(),
-                    Image = this,
                     Rating = value,
                     User = user
                 });
@@ -44,7 +43,6 @@ namespace eCademy.NUh16.PhotoShare.Models
     public class UserRating
     {
         public Guid Id { get; set; }
-        public virtual Image Image { get; set; }
         public virtual ApplicationUser User { get; set; }
         public int Rating { get; set; }
     }

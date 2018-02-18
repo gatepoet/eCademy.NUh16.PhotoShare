@@ -33,6 +33,16 @@ namespace eCademy.NUh16.PhotoShare.Models
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Image>()
+                .HasMany(image => image.Ratings)
+                .WithRequired()
+                .WillCascadeOnDelete();
+        }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

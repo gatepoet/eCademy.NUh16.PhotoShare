@@ -78,6 +78,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers
             var item = Db.Images
                 .Where(image => image.Id == id)
                 .Single();
+            var userId = User.Identity.GetUserId();
             var imageViewModel = new ImageViewModel
             {
                 Id = item.Id,
@@ -85,9 +86,10 @@ namespace eCademy.NUh16.PhotoShare.Controllers
                 Timestamp = item.Timestamp,
                 ImageUrl = Url.Content($"~/Images/Uploads/{item.Id}"),
                 Score = item.GetScore(),
-                Rating = item.GetRating(User.Identity.GetUserId()),
+                Rating = item.GetRating(userId),
                 Username = item.User.UserName,
-                Email = item.User.Email
+                Email = item.User.Email,
+                IsOwner = item.User.Id == userId,
             };
 
             if (imageViewModel == null)

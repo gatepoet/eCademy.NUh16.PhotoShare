@@ -48,12 +48,28 @@
                     </div>
                 </div>
                 <div class="row">
+                    <hr />
+                </div>
+                @if (Model.IsOwner)
+                {
+                <div class="row">
                     <div class="col-xs-12">
-                        <div class="control-group">
-                            <button class="btn btn-default">Delete</button>
+                        <div class="form-group text-right">
+                            <button class="btn btn-danger" data-toggle="collapse" data-target="#confirmDelete">Delete</button>
+                        </div>
+                        <div id="confirmDelete" class="collapse">
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4>Confirm photo deletion!</h4>
+                                <p>
+                                    <button id="deleteConfirmed" data-dismiss="alert" class="btn btn-danger">Ok</button>
+                                    <button data-dismiss="alert" class="btn btn-default pull-right">Cancel</button>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                }
             </div>
          </div>
     </div>
@@ -95,7 +111,20 @@
 
         $(function () {
             var id = '@Model.Id';
-            
+
+            $('#deleteConfirmed').on('click', function () {
+                var id = $('#Id').val();
+                $.ajax({
+                    method: 'DELETE',
+                    url: '/api/images/' + id
+                }).then(
+                    function (data) {
+                        window.location = '/';
+                    },
+                    function (error) {
+                        console.error(error);
+                    });
+            });
 
             function updateScore(score) {
                 $("#details span.score").html(score.toFixed(1));

@@ -25,7 +25,6 @@ namespace eCademy.NUh16.PhotoShare.Migrations
                 manager.Create(new IdentityRole { Name = AdminRole });
             }
 
-
             CreateOrUpdateUser(context, "radioactive");
             CreateOrUpdateUser(context, "lifeisbeautiful");
         }
