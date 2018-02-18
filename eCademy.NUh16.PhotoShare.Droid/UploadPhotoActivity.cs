@@ -24,7 +24,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
 {
     public class GenericFileProvider : FileProvider { }
 
-    [Activity(Label = "UploadPhotoActivity", Theme = "@style/MyTheme")]
+    [Activity(Label = "Upload Photo", WindowSoftInputMode = Android.Views.SoftInput.AdjustResize, Theme = "@style/MyTheme")]
     public class UploadPhotoActivity : Activity
     {
         private FloatingActionButton uploadButton;
@@ -32,6 +32,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
         private static Java.IO.File dir;
         private static Java.IO.File file;
         private Button setLocationButton;
+        private EditText comment;
 
         protected async override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,11 +40,11 @@ namespace eCademy.NUh16.PhotoShare.Droid
 
             SetContentView(Resource.Layout.UploadPhoto);
             uploadButton = FindViewById<FloatingActionButton>(Resource.Id.uploadPhoto_uploadFab);
-            uploadButton.Enabled = false;
             imageView = FindViewById<ImageView>(Resource.Id.uploadPhoto_image);
             imageView.Click += TakeAPhoto;
             uploadButton.Click += UploadPhoto;
-
+            comment = FindViewById<EditText>(Resource.Id.uploadPhoto_comment);
+            comment.TextChanged += delegate { CheckIfReadyForUpload(); };
             setLocationButton = FindViewById<Button>(Resource.Id.setLocation);
             setLocationButton.Click += async delegate { await SetLocation(); };
 
@@ -51,6 +52,22 @@ namespace eCademy.NUh16.PhotoShare.Droid
             {
                 EnsurePermissions();
                 EnsureDirectoryExists();
+            }
+            if (file != null)
+            {
+                ShowImage(file.AbsolutePath);
+            }
+        }
+
+        private void CheckIfReadyForUpload()
+        {
+            if (file == null || comment.Text.Length < 2)
+            {
+                uploadButton.Visibility = Android.Views.ViewStates.Gone;
+            }
+            else
+            {
+                uploadButton.Visibility = Android.Views.ViewStates.Visible;
             }
         }
 
@@ -65,8 +82,8 @@ namespace eCademy.NUh16.PhotoShare.Droid
                 case RequestCodes.TakePhotoRequest:
                     MakeAvailableInGallery(file);
                     ShowImage(file.AbsolutePath);
-
                     setLocationButton.Visibility = Android.Views.ViewStates.Visible;
+                    CheckIfReadyForUpload();
                     break;
                 default:
                     break;
@@ -98,7 +115,6 @@ namespace eCademy.NUh16.PhotoShare.Droid
             if (bitmap != null)
             {
                 imageView.SetImageBitmap(bitmap);
-                uploadButton.Enabled = true;
                 bitmap.Dispose();
             }
         }
@@ -120,7 +136,7 @@ namespace eCademy.NUh16.PhotoShare.Droid
             progress.SetProgressStyle(ProgressDialogStyle.Horizontal);
             progress.Show();
 
-            var title = FindViewById<EditText>(Resource.Id.uploadPhoto_comment).Text;
+            var title = comment.Text;
             var filename = file.Name;
 
             await Task.Run(async () =>
