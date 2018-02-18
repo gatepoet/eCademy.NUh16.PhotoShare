@@ -65,6 +65,6 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:visibility="gone"
-        android:src="@drawable/ic_file_upload_white"
+        android:src="@drawable/ic_file_upload_white_48dp"
         android:id="@+id/uploadPhoto_uploadFab" />
 </FrameLayout>
