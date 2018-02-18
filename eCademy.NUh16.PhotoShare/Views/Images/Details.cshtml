@@ -15,7 +15,7 @@
         </h4>
     </a>
     <div class="container">
-        <div class="row ">
+        <div class="row">
             <hr />
             <div id="image" class="col-sm-8">
                 <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
@@ -26,31 +26,43 @@
                         <div>
                             Score: <span class="score">@Model.Score.ToString("0.0")</span>
                         </div>
-                        <span class="rating">
-                            @for (int i = 1; i < MaxRating + 1; i++)
+                        <div class="rating">
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                if (i <= Model.Rating)
-                                {<span data-rating="@i" class="star glyphicon glyphicon-star"></span>}
-                                else
-                                {<span data-rating="@i" class="star glyphicon glyphicon-star-empty"></span>}
+                                for (int i = 1; i < MaxRating + 1; i++)
+                                {
+                                    if (i <= Model.Rating)
+                                    {<span data-rating="@i" class="star glyphicon glyphicon-star"></span>}
+                                    else
+                                    {<span data-rating="@i" class="star glyphicon glyphicon-star-empty"></span>}
+                                }
+                                <span class="info pull-right">Click to rate!</span>
                             }
-                            <span class="info pull-right">Click to rate!</span>
-                        </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div id="details-map" class="iframe-container">
+                    <div class="col-xs-12">
+                        <div id="details-map" class="iframe-container">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="control-group">
+                            <button class="btn btn-default">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
     </div>
 </div>
 @section scripts {
     @Scripts.Render("~/bundles/exif")
     <script>
-        function imageLoaded(event) {
-            EXIF.getData(event.target, function () {
+        function imageLoaded(img) {
+            EXIF.getData(img, function () {
                 var latitude = EXIF.getTag(this, "GPSLatitude");
                 var longitude = EXIF.getTag(this, "GPSLongitude");
 
@@ -72,9 +84,18 @@
                 (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
         };
 
+        function initMap() {
+            var $img = $("#image .img-responsive");
+            var img = $img[0];
+            if (img.complete) {
+                imageLoaded(img);
+            }
+            $img.on('load', function () { imageLoaded(img); });
+        }
+
         $(function () {
             var id = '@Model.Id';
-            $("#image .img-responsive").on('load', imageLoaded);
+            
 
             function updateScore(score) {
                 $("#details span.score").html(score.toFixed(1));
@@ -105,9 +126,8 @@
                     url: '/Images/' + id + '/rate/' + data.rating
                 }).then(
                     function (data) {
-                        console.log(data.NewScore);
                         updateRating($element);
-                        updateScore(data.NewScore);
+                        updateScore(data.newScore);
                     },
                     function (error) {
                         console.error(error)
@@ -118,6 +138,6 @@
         });
     </script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZhWYVZKZ0tTaP_903LoUZCPhOjeol15w">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZhWYVZKZ0tTaP_903LoUZCPhOjeol15w&callback=initMap">
     </script>
 }

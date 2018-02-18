@@ -145,12 +145,18 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
         // PUT api/<controller>/5
         [HttpPut]
         [Route("Images/{id:int}/rate/{rating:int}")]
-        public IHttpActionResult PutRate(int id, int rating)
+        public async Task<IHttpActionResult> PutRate(int id, int rating)
         {
-            ///TODO: Rate photo, return new score.
-            var newScore = 1.1;
+            var image = Db.Images.Find(id);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            image.Rate(rating, user);
+            await Db.SaveChangesAsync();
 
-            return Ok(new RateResult(newScore));
+            return Ok(new RateResult(image.GetScore()));
         }
     }
 
