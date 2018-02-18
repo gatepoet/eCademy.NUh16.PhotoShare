@@ -14,6 +14,9 @@ namespace eCademy.NUh16.PhotoShare
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/exif").Include(
+                        "~/Scripts/exif.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-{version}.js",
                         "~/Scripts/knockout.mapping-latest.js"));
