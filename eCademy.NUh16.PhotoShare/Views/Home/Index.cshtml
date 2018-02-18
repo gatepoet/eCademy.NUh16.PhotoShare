@@ -7,11 +7,10 @@
         <img src="~/Content/logo_128x128.png" alt="logo" />
         Photo<strong>Share</strong><em></em>
     </h1>
-    <p class="lead">This is the world's bigges photo sharing app. You can share all your photos with everyone or just your friends.</p>
-    <input type="button" value="Learn more &raquo;" class="btn btn-primary btn-lg" onclick="location.href='@Url.Action("About", "Home")'" />
+    <p class="lead">This is the world's biggest photo sharing app <small>(If you have your own definition of big)</small>.</p>
 </div>
 
-<div class="image-container">
+<div class="image-container well clearfix">
     <!-- ko if: loading -->
     <span class="glyphicon glyphicon-refresh spinning"></span>
     <!-- /ko -->

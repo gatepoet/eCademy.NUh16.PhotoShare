@@ -48,7 +48,7 @@ namespace eCademy.NUh16.PhotoShare.Controllers.API
         {
             var images = Db.Images
                 .OrderByDescending(image => image.Timestamp)
-                .Take(9)
+                .Take(30)
                 .ToArray()
                 .Select(image => new ImageListItemDto
                 {

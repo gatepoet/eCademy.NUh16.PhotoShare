@@ -23,6 +23,14 @@ textarea {
     max-width: 280px;
 }
 
+.logo {
+    font-family: 'Indie Flower', cursive;
+}
+
+.logo.navbar-brand img {
+    margin: -10px 0;
+}
+
 /* Rating */
 .rating {
     line-height: 1.428571429; /* Same as Bootstrap's .btn class */
@@ -122,8 +130,23 @@ textarea {
 
 .image-container {
     width: 600px;
-    height: 600px;
     margin: 0 auto;
+}
+
+div.image-container.well {
+    padding: 0;
+}
+
+@media(min-width: 992px) {
+    .image-container {
+        width: 800px;
+    }
+}
+
+@media(min-width: 1200px) {
+    .image-container {
+        width: 1000px;
+    }
 }
 
 .image-container div {

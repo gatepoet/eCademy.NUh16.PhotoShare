@@ -6,56 +6,58 @@
 }
 
 @Html.HiddenFor(model => model.Id)
-<h2>@Model.Title</h2>
-<div>
-    <a href="#">
-        <h4 class="username">
-            @Html.Gravatar(Model.Email, 32)
-            @Html.ActionLink(username, "Index", "User", new { Username = Model.Username }, null)
-        </h4>
-    </a>
-    <div class="container">
-        <div class="row">
-            <hr />
-            <div id="image" class="col-sm-8">
-                <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
-            </div>
-            <div id="details" class="col-sm-4">
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div>
-                            Score: <span class="score">@Model.Score.ToString("0.0")</span>
-                        </div>
-                        <div class="rating">
+<div class="well container">
+    <div class="card-header">
+        <h3 class="card-title text-center">@Model.Title</h3>
+    </div>
+    <div class="row">
+        <div id="image" class="col-sm-8">
+            <img class="img-responsive" src="@Model.ImageUrl" alt="@Model.Title" />
+        </div>
+        <div id="details" class="col-sm-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div>
+                        @Html.Gravatar(Model.Email, 64)
+                        @Html.ActionLink(username, "Index", "User", new { Username = Model.Username }, new { @class = "col-xs-push-1" })
+                    </div>
+                    <div class="form-group">
+                        <label>Score: <span class="score">@Model.Score.ToString("0.0")</span></label>
+                        <span class="rating pull-right">
                             @if (User.Identity.IsAuthenticated)
                             {
                                 for (int i = 1; i < MaxRating + 1; i++)
                                 {
                                     if (i <= Model.Rating)
-                                    {<span data-rating="@i" class="star glyphicon glyphicon-star"></span>}
+                                    {
+                                        <span data-rating="@i" class="star glyphicon glyphicon-star"></span>
+                                    }
                                     else
-                                    {<span data-rating="@i" class="star glyphicon glyphicon-star-empty"></span>}
+                                    {
+                                        <span data-rating="@i" class="star glyphicon glyphicon-star-empty"></span>
+                                    }
                                 }
-                                <span class="info pull-right">Click to rate!</span>
+                                <span class="info pull-left">Click to rate!</span>
                             }
-                        </div>
+                        </span>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div id="details-map" class="iframe-container">
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="details-map" class="iframe-container">
                     </div>
                 </div>
-                <div class="row">
-                    <hr />
-                </div>
-                @if (Model.IsOwner)
-                {
+            </div>
+            @if (Model.IsOwner)
+            {
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group text-right">
-                            <button class="btn btn-danger" data-toggle="collapse" data-target="#confirmDelete">Delete</button>
+                            <button data-toggle="collapse" data-target="#confirmDelete" class="btn btn-raised btn-block btn-danger delete-button pull-right">
+                                <span class="glyphicon glyphicon-remove" title="Delete" aria-hidden="true"></span>
+                                Delete
+                            </button>
                         </div>
                         <div id="confirmDelete" class="collapse">
                             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -69,9 +71,8 @@
                         </div>
                     </div>
                 </div>
-                }
-            </div>
-         </div>
+            }
+        </div>
     </div>
 </div>
 @section scripts {

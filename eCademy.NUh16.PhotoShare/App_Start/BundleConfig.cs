@@ -32,6 +32,7 @@ namespace eCademy.NUh16.PhotoShare
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-material-design.css",
                       "~/Content/site.css"));
         }
     }
